@@ -14,7 +14,6 @@
 		0D07B9B22BE87AAE008E42BF /* SerialPort.c in Sources */ = {isa = PBXBuildFile; fileRef = 0D07B9B12BE87AAE008E42BF /* SerialPort.c */; };
 		0D07B9B42BE87C02008E42BF /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D07B9B32BE87C02008E42BF /* Controller.swift */; };
 		0D07B9B62BE8B498008E42BF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D07B9B52BE8B498008E42BF /* Enums.swift */; };
-		0D07B9B82BE8BD9B008E42BF /* KeyEventTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D07B9B72BE8BD9B008E42BF /* KeyEventTap.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +28,6 @@
 		0D07B9B12BE87AAE008E42BF /* SerialPort.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SerialPort.c; sourceTree = "<group>"; };
 		0D07B9B32BE87C02008E42BF /* Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		0D07B9B52BE8B498008E42BF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
-		0D07B9B72BE8BD9B008E42BF /* KeyEventTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyEventTap.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +65,6 @@
 				0D07B9A02BE87A62008E42BF /* n64usbApp.swift */,
 				0D07B9A22BE87A62008E42BF /* ContentView.swift */,
 				0D07B9B32BE87C02008E42BF /* Controller.swift */,
-				0D07B9B72BE8BD9B008E42BF /* KeyEventTap.swift */,
 				0D07B9B52BE8B498008E42BF /* Enums.swift */,
 				0D07B9B02BE87AAE008E42BF /* SerialPort.h */,
 				0D07B9B12BE87AAE008E42BF /* SerialPort.c */,
@@ -158,7 +155,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D07B9B82BE8BD9B008E42BF /* KeyEventTap.swift in Sources */,
 				0D07B9B22BE87AAE008E42BF /* SerialPort.c in Sources */,
 				0D07B9A32BE87A62008E42BF /* ContentView.swift in Sources */,
 				0D07B9B62BE8B498008E42BF /* Enums.swift in Sources */,

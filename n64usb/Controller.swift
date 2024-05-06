@@ -24,21 +24,20 @@ struct N64Input {
 @MainActor
 class Controller: ObservableObject {
     
-    var inputs: [CGKeyCode : N64Input] = [
-        0x24: N64Input(inputType: .A, binding: 0x24, value: 1, pressed: false),
-        0x7D: N64Input(inputType: .B, binding: 0x7D, value: 1, pressed: false),
-        0x31: N64Input(inputType: .Z, binding: 0x31, value: 1, pressed: false),
-        0x23: N64Input(inputType: .Start, binding: 0x23, value: 1, pressed: false),
-        0x0D: N64Input(inputType: .YAxis, binding: 0x0D, value: 89, pressed: false),
-        0x2C: N64Input(inputType: .CLeft, binding: 0x2C, value: 1, pressed: false),
-        0x13: N64Input(inputType: .YAxis, binding: 0x13, value: 127, pressed: false),
-        0x00: N64Input(inputType: .XAxis, binding: 0x00, value: -128, pressed: false),
-        0x02: N64Input(inputType: .XAxis, binding: 0x02, value: 127, pressed: false),
-        0x01: N64Input(inputType: .YAxis, binding: 0x01, value: -128, pressed: false)
+    var inputs: [KeyEquivalent : N64Input] = [
+        .return: N64Input(inputType: .A, binding: 0x24, value: 1, pressed: false),
+        .downArrow: N64Input(inputType: .B, binding: 0x7D, value: 1, pressed: false),
+        .space: N64Input(inputType: .Z, binding: 0x31, value: 1, pressed: false),
+        "p": N64Input(inputType: .Start, binding: 0x23, value: 1, pressed: false),
+        "w": N64Input(inputType: .YAxis, binding: 0x0D, value: 89, pressed: false),
+        "/": N64Input(inputType: .CLeft, binding: 0x2C, value: 1, pressed: false),
+        "2": N64Input(inputType: .YAxis, binding: 0x13, value: 127, pressed: false),
+        "a": N64Input(inputType: .XAxis, binding: 0x00, value: -128, pressed: false),
+        "d": N64Input(inputType: .XAxis, binding: 0x02, value: 127, pressed: false),
+        "s": N64Input(inputType: .YAxis, binding: 0x01, value: -128, pressed: false)
     ]
     
     var fileDescriptor: Int32 = 0
-    var eventTap: N64EventTap! = nil
     
     private var _pollInputTimer: DispatchSourceTimer?
     
@@ -54,7 +53,6 @@ class Controller: ObservableObject {
     
     func start() async throws {
         try locateMicrocontroller()
-        self.eventTap = try N64EventTap(self.eventTapCallback, controller: self)
         _pollInputTimer = DispatchSource.makeTimerSource(flags: .strict, queue: _pollInputQueue)
         _pollInputTimer!.schedule(
             deadline: .now(),
@@ -91,7 +89,11 @@ class Controller: ObservableObject {
         return packedInputBytes
     }
     
-    func eventTapCallback(keyCode: CGKeyCode, pressed: Bool) {
-        inputs[keyCode]!.pressed = pressed
+    func keyPressEvent(_ keyPress: KeyPress) {
+        if keyPress.phase == .down {
+            inputs[keyPress.key]?.pressed = true
+        } else if keyPress.phase == .up {
+            inputs[keyPress.key]?.pressed = false
+        }
     }
 }

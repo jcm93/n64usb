@@ -36,6 +36,10 @@ struct ContentView: View {
                 }
             }
         }
+        .onKeyPress(phases: .all, action: { keyPress in
+            controller.keyPressEvent(keyPress)
+            return .handled
+        })
     }
     
 }
