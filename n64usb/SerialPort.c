@@ -472,7 +472,7 @@ int writeRaw(int fileDescriptor, int32_t num) {
         return 0;
     }
     else {
-        printf("Wrote %ld bytes \"%s\"\n", numBytes, logString(buffer));
+        //printf("Wrote %ld bytes \"%s\"\n", numBytes, logString(buffer));
         return 1;
     }
 }

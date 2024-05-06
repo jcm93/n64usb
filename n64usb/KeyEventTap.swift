@@ -11,11 +11,12 @@ class N64EventTap {
     
     private var controller: Controller
     
-    var callback: ((CGKeyCode, Bool) -> Void)? = nil
+    var callback: ((CGKeyCode, Bool) -> Void)
     
     init(_ callback: @escaping (CGKeyCode, Bool) -> Void, controller: Controller) throws {
         
         self.controller = controller
+        self.callback = callback
         
         let mask: CGEventMask = (1 << CGEventType.keyDown.rawValue) | (1 << CGEventType.keyUp.rawValue)
         
@@ -40,7 +41,6 @@ class N64EventTap {
         let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0)
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)
         CGEvent.tapEnable(tap: eventTap, enable: true)
-        self.callback = callback
     }
     
     @MainActor func eventTapCallback(proxy: CGEventTapProxy, type: CGEventType, event: CGEvent) -> CGEvent? {
@@ -50,11 +50,11 @@ class N64EventTap {
             return nil
         }
         
-        let interestedKeyCodes = Array(self.controller.inputs.keys) as! [CGKeyCode]
+        let interestedKeyCodes = self.controller.inputs.keys
         
         if interestedKeyCodes.contains(keyCode) {
             let pressed = type == .keyDown
-            callback!(keyCode, pressed)
+            callback(keyCode, pressed)
         }
         return nil
     }

@@ -28,11 +28,13 @@ class Controller: ObservableObject {
         0x24: N64Input(inputType: .A, binding: 0x24, value: 1, pressed: false),
         0x7D: N64Input(inputType: .B, binding: 0x7D, value: 1, pressed: false),
         0x31: N64Input(inputType: .Z, binding: 0x31, value: 1, pressed: false),
-        0x0D: N64Input(inputType: .YAxis, binding: 0x0D, value: 90, pressed: false),
+        0x23: N64Input(inputType: .Start, binding: 0x23, value: 1, pressed: false),
+        0x0D: N64Input(inputType: .YAxis, binding: 0x0D, value: 89, pressed: false),
+        0x2C: N64Input(inputType: .CLeft, binding: 0x2C, value: 1, pressed: false),
         0x13: N64Input(inputType: .YAxis, binding: 0x13, value: 127, pressed: false),
-        0x00: N64Input(inputType: .XAxis, binding: 0x00, value: -127, pressed: false),
+        0x00: N64Input(inputType: .XAxis, binding: 0x00, value: -128, pressed: false),
         0x02: N64Input(inputType: .XAxis, binding: 0x02, value: 127, pressed: false),
-        0x01: N64Input(inputType: .YAxis, binding: 0x01, value: -127, pressed: false)
+        0x01: N64Input(inputType: .YAxis, binding: 0x01, value: -128, pressed: false)
     ]
     
     var fileDescriptor: Int32 = 0
@@ -49,7 +51,6 @@ class Controller: ObservableObject {
     )
     
     @State var isCapturing = false
-    var keys = CharacterSet()
     
     func start() async throws {
         try locateMicrocontroller()
@@ -82,10 +83,10 @@ class Controller: ObservableObject {
         var packedInputBytes: Int32 = 0
         for (_, input) in inputs {
             if input.pressed {
-                print("shifting \(input.value) by \(input.inputType.bitOffset())")
-                packedInputBytes |= input.value << input.inputType.bitOffset()
+                let value = input.value
+                let valueToAdd = value < 0 ? (~value+1) : value
+                packedInputBytes |= valueToAdd << input.inputType.bitOffset()
             }
-            
         }
         return packedInputBytes
     }
