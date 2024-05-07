@@ -56,7 +56,7 @@ class Controller: ObservableObject {
         _pollInputTimer = DispatchSource.makeTimerSource(flags: .strict, queue: _pollInputQueue)
         _pollInputTimer!.schedule(
             deadline: .now(),
-            repeating: 1.0 / Double(60),
+            repeating: 1.0 / Double(600),
             leeway: .seconds(0)
         )
         _pollInputTimer?.setEventHandler {
@@ -90,10 +90,13 @@ class Controller: ObservableObject {
     }
     
     func keyPressEvent(_ keyPress: KeyPress) {
-        if keyPress.phase == .down {
-            inputs[keyPress.key]?.pressed = true
-        } else if keyPress.phase == .up {
-            inputs[keyPress.key]?.pressed = false
+        //synchronize to ensure no race condition
+        _pollInputQueue.sync {
+            if keyPress.phase == .down {
+                inputs[keyPress.key]?.pressed = true
+            } else if keyPress.phase == .up {
+                inputs[keyPress.key]?.pressed = false
+            }
         }
     }
 }
