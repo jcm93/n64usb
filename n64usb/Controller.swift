@@ -16,7 +16,6 @@ enum ControllerInitializeError: Error {
 
 struct N64Input {
     var inputType: N64InputType
-    var binding: CGKeyCode
     var value: Int32
     var pressed: Bool
 }
@@ -25,16 +24,17 @@ struct N64Input {
 class Controller: ObservableObject {
     
     var inputs: [KeyEquivalent : N64Input] = [
-        .return: N64Input(inputType: .A, binding: 0x24, value: 1, pressed: false),
-        .downArrow: N64Input(inputType: .B, binding: 0x7D, value: 1, pressed: false),
-        .space: N64Input(inputType: .Z, binding: 0x31, value: 1, pressed: false),
-        "p": N64Input(inputType: .Start, binding: 0x23, value: 1, pressed: false),
-        "w": N64Input(inputType: .YAxis, binding: 0x0D, value: 89, pressed: false),
-        "/": N64Input(inputType: .CLeft, binding: 0x2C, value: 1, pressed: false),
-        "2": N64Input(inputType: .YAxis, binding: 0x13, value: 127, pressed: false),
-        "a": N64Input(inputType: .XAxis, binding: 0x00, value: -128, pressed: false),
-        "d": N64Input(inputType: .XAxis, binding: 0x02, value: 127, pressed: false),
-        "s": N64Input(inputType: .YAxis, binding: 0x01, value: -128, pressed: false)
+        .return: N64Input(inputType: .A, value: 1, pressed: false),
+        .downArrow: N64Input(inputType: .B, value: 1, pressed: false),
+        .space: N64Input(inputType: .Z, value: 1, pressed: false),
+        "p": N64Input(inputType: .Start, value: 1, pressed: false),
+        "w": N64Input(inputType: .YAxis, value: 89, pressed: false),
+        "/": N64Input(inputType: .CLeft, value: 1, pressed: false),
+        "2": N64Input(inputType: .YAxis, value: 127, pressed: false),
+        "a": N64Input(inputType: .XAxis, value: -128, pressed: false),
+        "d": N64Input(inputType: .XAxis, value: 127, pressed: false),
+        "s": N64Input(inputType: .YAxis, value: -128, pressed: false),
+        "r": N64Input(inputType: .R, value: 1, pressed: false)
     ]
     
     var fileDescriptor: Int32 = 0
